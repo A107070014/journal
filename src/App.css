@@ -1,0 +1,190 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+::-webkit-scrollbar{
+  display:none;
+}
+body{
+  background-image: url(./img/background.png);
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.book{
+  position: relative;
+  width: 500px;
+  height: 600px;
+  transition: transform 0.5s;
+}
+.cover{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  perspective: 1500px;
+}
+.back-cover{
+  background: rgba(240, 169, 129, 0.83);
+  border: 5px solid #F7BC9B;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  width:100%;
+  height:100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index:-2;
+}
+.page{
+  width: 490px;
+  height: 590px;
+  background-color: #ffffff;
+  position: absolute;
+  top: 5px;
+  left:5px;
+  border-radius: 5px;
+  z-index: -1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+.front,.back{
+  background-color: #f0a981;
+  background-image: url("https://www.transparenttextures.com/patterns/gray-floral.png");
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: left;
+  transition: transform 0.5s;
+}
+.flipped .front,.flipped .back{
+  transform: rotateY(-180deg);
+}
+.front{
+  z-index: 1;
+  backface-visibility: hidden;
+}
+.back{
+  z-index: -1;
+  border-left: 2px solid #f0e9de;
+  background-color: #fff;
+  background-image: url("https://www.transparenttextures.com/patterns/gray-floral.png");
+  border: 5px solid #F7BC9B;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.front-content{
+  font-size: 30px;
+  color: #fff;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.back-content{
+  transform: rotateY(-180deg);
+  position: relative;
+  top: 10px;
+}
+.bar{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.picture{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.picture>img{
+  width:100%;
+  position: relative;
+  bottom: 15px; 
+}
+.search{
+  display: flex;
+  height: 50px;
+  position: relative;
+}
+.searchBox{
+  border-radius: 10px;
+  width: 300px;
+  background-color: rgb(255, 255, 255);
+  border: transparent;
+  font-size: 16px;
+  padding-left: 45px;
+  padding-right: 15px;
+  color: #8e8e8e;
+  border: 1px solid #e7e7e7;
+}
+input:focus{
+  outline: none;
+}
+.searchIcon{
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: 10px;
+  top: 12px;
+  cursor: pointer;
+}
+.add{
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.566);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid #e7e7e7;
+}
+.add>img{
+  width: 40%;
+}
+.page input{
+  border: transparent;
+  border-radius: 10px;
+}
+.info{
+  height: 10%;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.info input{
+  height: 80%;
+  padding-left: 5px;
+  border: 1px solid #e7e7e7;
+}
+.content{
+  width: 80%;
+  height: 60%;
+  border-radius: 10px;
+  border: 1px solid #e7e7e7;
+}
+.btn{
+  height: 10%;
+}
+.btn>button{
+  height: 80%;
+  width: 180px;
+  border: none;
+  background-color: transparent;
+  border: 1px solid #e7e7e7;
+  border-radius: 10px;
+  margin: 0 15px;
+  cursor: pointer;
+}
