@@ -1,11 +1,19 @@
 import './App.css';
 import {useState} from 'react';
 import picture from './img/欣玫.jpg';
+import background from './img/background.png';
 import search from './img/search.png';
 import add from './img/add.png';
+import save from './img/save.png';
+import trashCan from './img/trash-can.png';
+import close from './img/close.png';
+import calendar from './img/calendar.png';
+import pen from './img/pen.png';
+
 
 export default function Journal() {
   const [openBook,setOpenBook] = useState(false); 
+  const [value,setValue] = useState('');
   return (
     <div className="book" style={{transform:openBook && "translateX(50%)"}}>
       <div className={["cover",openBook && "flipped"].join(' ')} style={{zIndex:openBook && -1}}>
@@ -31,18 +39,26 @@ export default function Journal() {
           </div>
         </div>
       </div>
+      <div className="closeBtn"><img src={close} alt="取消" width={15}/></div>
       <div className="page">
         <div className="info">
-          <input type="text" placeholder='標題'/>
-          <span>2022/05/11</span>
+          <div className="title">
+            <img src={pen} alt="標題"/>
+            <input type="text" placeholder='標題...'/>
+          </div>
+          <div className="calendar">
+            <img src={calendar} alt="日期"/>
+            <span>2022/05/11</span>
+          </div>
         </div>
         <div className="content">
-          <img src={picture} alt="輪播圖片" width={50}/><br/>
-          <input type="text" placeholder='日記'/>
+          <div>
+            <img src={background} alt="輪播圖片"/><br/>
+          </div>
+          <textarea name="journal" value={value} onChange={(e) => setValue(e.target.value)} placeholder='日記...' ></textarea>
         </div>
-        <div className="btn">
-          <button className="closeBtn">取消</button>
-          <button className="saveBtn">儲存</button>
+        <div className="saveBtn">
+          <img src={save} alt="儲存" width={30}/>
         </div>
       </div>
       <div className="back-cover"></div>

@@ -3,6 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+:root{
+  --main-color:#f0a981;
+  --light-pink:#F7BC9B;
+  --text:#575757;
+}
 ::-webkit-scrollbar{
   display:none;
 }
@@ -31,7 +36,7 @@ body{
 }
 .back-cover{
   background: rgba(240, 169, 129, 0.83);
-  border: 5px solid #F7BC9B;
+  border: 5px solid var(--light-pink);
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   width:100%;
@@ -51,12 +56,12 @@ body{
   border-radius: 5px;
   z-index: -1;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
 }
 .front,.back{
-  background-color: #f0a981;
+  background-color: var(--main-color);
   background-image: url("https://www.transparenttextures.com/patterns/gray-floral.png");
   border-radius: 10px;
   position: absolute;
@@ -79,7 +84,7 @@ body{
   border-left: 2px solid #f0e9de;
   background-color: #fff;
   background-image: url("https://www.transparenttextures.com/patterns/gray-floral.png");
-  border: 5px solid #F7BC9B;
+  border: 5px solid var(--light-pink);
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .front-content{
@@ -125,7 +130,7 @@ body{
   font-size: 16px;
   padding-left: 45px;
   padding-right: 15px;
-  color: #8e8e8e;
+  color: var(--text);
   border: 1px solid #e7e7e7;
 }
 input:focus{
@@ -153,38 +158,109 @@ input:focus{
 .add>img{
   width: 40%;
 }
-.page input{
-  border: transparent;
-  border-radius: 10px;
+.closeBtn{
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  border-radius: 50%;
+  /* background-color: #; */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: var(--main-color);
+}
+.closeBtn:hover{
+  background-color: var(--light-pink);
 }
 .info{
   height: 10%;
-  width: 80%;
+  width: 95%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.info input{
-  height: 80%;
-  padding-left: 5px;
-  border: 1px solid #e7e7e7;
+.title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.title>img{
+  width: 25px;
+}
+.title>input{
+  padding: 5px 5px;
+  border: transparent;
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--text);
+}
+.title:hover >img{
+  margin-bottom: 10px;
+}
+.title:hover >input{
+  border-bottom: 2px dotted #fece85;
+}
+.calendar{
+  width: 27%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.calendar>span{
+  font-weight: bold;
+  color: var(--text);
+
+}
+.calendar>img{
+  width: 30px;
 }
 .content{
-  width: 80%;
+  width: 100%;
   height: 60%;
-  border-radius: 10px;
-  border: 1px solid #e7e7e7;
+  /* border: 1px solid #e7e7e7; */
 }
-.btn{
-  height: 10%;
+.content>div{
+  width:100%;
+  height: 60%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 2px dashed var(--main-color);
+  border-bottom: 2px dashed var(--main-color);
+  /* position: relative; */
 }
-.btn>button{
-  height: 80%;
-  width: 180px;
-  border: none;
-  background-color: transparent;
-  border: 1px solid #e7e7e7;
-  border-radius: 10px;
-  margin: 0 15px;
+.content>div>img{
+  /* position: absolute; */
+  
+}
+.content>textarea{
+  width: 100%;
+  height: 90%;
+  border: transparent;
+  padding:10px 10px;
+  line-height: 20px;
+  color: var(--text);
+}
+.content>textarea:focus{
+  outline:none;
+}
+.saveBtn{
+  position: absolute;
+  bottom: -30px;
+  background-color: var(--main-color);
+  border-radius: 50%;
+  width: 55px;
+  height:55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+}
+.saveBtn:hover{
+  background-color: var(--light-pink);
 }
