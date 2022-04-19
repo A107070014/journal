@@ -221,22 +221,46 @@ input:focus{
 .content{
   width: 100%;
   height: 60%;
-  /* border: 1px solid #e7e7e7; */
+  position: relative;
 }
 .content>div{
   width:100%;
   height: 60%;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border-top: 2px dashed var(--main-color);
   border-bottom: 2px dashed var(--main-color);
   /* position: relative; */
 }
-.content>div>img{
-  /* position: absolute; */
-  
+.slick-list{
+  width:100%;
+}
+.slick-slide img{
+  height: 220px;
+  width: 100%;
+}
+.uploadImage{
+  width: 100%;
+  height: 60%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.uploadImage:hover{
+  background-color: #cac5c55e;
+  cursor: pointer;
+}
+.uploadImage:hover >label>img{
+  display: block;
+  cursor: pointer;
+}
+.uploadImage>label>img{
+  display: none;
+  width: 50px;
+}
+.uploadImage>input{
+  display: none;
 }
 .content>textarea{
   width: 100%;
