@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/journal/static/css/main.c10b86aa.css",
+    "main.js": "/journal/static/js/main.9dee9261.js",
+    "static/media/background.png": "/journal/static/media/background.73bfb99c6f339cc00e91.png",
+    "static/media/欣玫.jpg": "/journal/static/media/欣玫.ef915bf42af5760afe50.jpg",
+    "static/media/autoplay3.jpg": "/journal/static/media/autoplay3.e468af65931dba1c3f86.jpg",
+    "static/media/autoplay4.jpg": "/journal/static/media/autoplay4.15d7f4157a3aa5155778.jpg",
+    "static/media/autoplay1.jpg": "/journal/static/media/autoplay1.c58a9451039c874a6580.jpg",
+    "static/media/calendar.png": "/journal/static/media/calendar.d980142026455fe60d9b.png",
+    "static/media/autoplay2.jpg": "/journal/static/media/autoplay2.ae737c66216fb42e9213.jpg",
+    "static/media/slick.svg": "/journal/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/journal/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/journal/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/journal/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/journal/index.html",
+    "main.c10b86aa.css.map": "/journal/static/css/main.c10b86aa.css.map",
+    "main.9dee9261.js.map": "/journal/static/js/main.9dee9261.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c10b86aa.css",
+    "static/js/main.9dee9261.js"
+  ]
+}
