@@ -33,8 +33,6 @@ export default function Journal() {
     autoplaySpeed:15000
   };
 
-
-
   return (
     <div className="book" style={{transform:openBook && "translateX(50%)"}}>
       <div className={["cover",openBook && "flipped"].join(' ')} style={{zIndex:openBook && -1}}>

@@ -112,10 +112,13 @@ body{
   justify-content: center;
   align-items: center;
 }
+.backArrow:hover .closeBook{
+  background-color: var(--light-pink);
+}
 .closeBook{
   width: 50px;
   height: 50px;
-  background-color: var(--light-pink);
+  background-color: var(--main-color);
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -123,7 +126,6 @@ body{
 }
 .closeBook>img{
   width: 30px;
-  
 }
 .backArrow:hover{
   /* width: 35px; */
@@ -171,6 +173,9 @@ body{
   color: var(--text);
   border: 1px solid #e7e7e7;
 }
+.searchBox:hover{
+  border: 2px solid var(--light-pink);
+}
 input:focus{
   outline: none;
 }
@@ -186,12 +191,15 @@ input:focus{
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  background-color: rgba(255, 255, 255, 0.566);
+  background-color: rgba(255, 255, 255);
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   border: 1px solid #e7e7e7;
+}
+.add:hover{
+  border: 2px solid var(--light-pink);
 }
 .add>img{
   width: 40%;
