@@ -22,9 +22,24 @@ import Slider from "react-slick";
 export default function Journal() {
   const [openBook,setOpenBook] = useState(false); 
   const [value,setValue] = useState('');
+  const images = [autoplay1,autoplay2,autoplay3,autoplay4];
+  const [selectedImg,setSelectedImg] = useState(images);
+  const onSelectFile = (e) => {
+    const selectedFiles = e.target.files;
+    const selectedFilesArray = Array.from(selectedFiles);
+
+    const imagesArray = selectedFilesArray.map((files)=>{
+      return URL.createObjectURL(files);
+    });
+
+    setSelectedImg((previousImg) => (
+      previousImg.concat(imagesArray)
+    ));
+  }; 
+
   /*react-slick autoplay*/
   const settings = {
-    dots:false,
+    dots:true,
     infinite:true,
     slidesToShow:2,
     slidesToScroll:1,
@@ -78,25 +93,30 @@ export default function Journal() {
         <div className="content">
           <div>
             <Slider {...settings}>
-              <div>
-                <img src={autoplay1} alt="輪播圖片" />
-              </div>
-              <div>
-                <img src={autoplay2} alt="輪播圖片" />
-              </div>
-              <div>
-                <img src={autoplay3} alt="輪播圖片" />
-              </div>
-              <div>
-                <img src={autoplay4} alt="輪播圖片" />
-              </div>
+              {selectedImg &&
+                selectedImg.map((image, index) => {
+                  return (
+                    <div key={image}>
+                      <img src={image} alt="upload" />
+                      <button
+                        onClick={() =>
+                          setSelectedImg(selectedImg.filter((e) => e !== image))
+                        }
+                      >
+                        delete image
+                      </button>
+                      <p>{index + 1}</p>
+                    </div>
+                  );
+                })
+              }
             </Slider>
           </div>          
           <span className="uploadImage">
             <label for="file-input">
               <img src={image} alt="上傳照片"/>
             </label>
-            <input id="file-input" type="file" accept="image/png,image/jpeg" multiple="multiple"/>
+            <input onChange={onSelectFile} id="file-input" type="file" accept="image/png,image/jpeg" multiple="multiple"/>
           </span>
           <textarea name="journal" value={value} onChange={(e) => setValue(e.target.value)} placeholder='日記...' ></textarea>
         </div>
