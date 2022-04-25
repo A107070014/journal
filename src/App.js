@@ -25,6 +25,7 @@ export default function Journal() {
   const images = [autoplay1,autoplay2,autoplay3,autoplay4];
   const [selectedImg,setSelectedImg] = useState(images);
   const onSelectFile = (e) => {
+    
     const selectedFiles = e.target.files;
     const selectedFilesArray = Array.from(selectedFiles);
 
@@ -32,10 +33,27 @@ export default function Journal() {
       return URL.createObjectURL(files);
     });
 
-    setSelectedImg((previousImg) => (
-      previousImg.concat(imagesArray)
-    ));
+    if (JSON.stringify(selectedImg) === JSON.stringify(images)) {
+      setSelectedImg(imagesArray)
+      console.log('true');
+    } else {
+      setSelectedImg((previousImg) => (
+        previousImg.concat(imagesArray)
+      ));
+      console.log('false');
+    }
+    
   }; 
+
+  function deleteImg(data) {
+    if (selectedImg.length === 1) {
+      setSelectedImg(selectedImg.filter(e => e != data));
+      setSelectedImg(images);
+    } else {
+      setSelectedImg(selectedImg.filter(e => e != data));
+    }
+    
+  }
 
   /*react-slick autoplay*/
   const settings = {
@@ -99,9 +117,7 @@ export default function Journal() {
                     <div key={image}>
                       <img src={image} alt="upload" />
                       <button
-                        onClick={() =>
-                          setSelectedImg(selectedImg.filter((e) => e !== image))
-                        }
+                        onClick={() => deleteImg(image)}
                       >
                         delete image
                       </button>
