@@ -17,7 +17,7 @@ import autoplay4 from './img/autoplay4.jpg';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-
+import DatePicker from 'react-date-picker';
 
 export default function Journal() {
   const [openBook,setOpenBook] = useState(false); 
@@ -34,15 +34,12 @@ export default function Journal() {
     });
 
     if (JSON.stringify(selectedImg) === JSON.stringify(images)) {
-      setSelectedImg(imagesArray)
-      console.log('true');
+      setSelectedImg(imagesArray);
     } else {
       setSelectedImg((previousImg) => (
         previousImg.concat(imagesArray)
       ));
-      console.log('false');
     }
-    
   }; 
 
   function deleteImg(data) {
@@ -54,17 +51,20 @@ export default function Journal() {
     }
     
   }
-
   /*react-slick autoplay*/
   const settings = {
-    dots:true,
+    dots:false,
+    arrows: false,
     infinite:true,
-    slidesToShow:2,
+    slidesToShow:1,
     slidesToScroll:1,
     autoplay:true,
     speed:5000,
-    autoplaySpeed:15000
+    autoplaySpeed:100000
   };
+
+  /*react-date-picker*/
+  const [date,setdate]  = useState(new Date()); 
 
   return (
     <div className="book" style={{transform:openBook && "translateX(50%)"}}>
@@ -105,23 +105,24 @@ export default function Journal() {
           </div>
           <div className="calendar">
             <img src={calendar} alt="日期"/>
-            <span>2022/05/11</span>
+            <DatePicker
+              onChange = {setdate}
+              value = {date}
+              calendarIcon = {false}
+              clearIcon = {false}
+              required = {true}
+            />
           </div>
         </div>
         <div className="content">
           <div>
             <Slider {...settings}>
               {selectedImg &&
-                selectedImg.map((image, index) => {
+                selectedImg.map((image) => {
                   return (
-                    <div key={image}>
+                    <div key={image} >
                       <img src={image} alt="upload" />
-                      <button
-                        onClick={() => deleteImg(image)}
-                      >
-                        delete image
-                      </button>
-                      <p>{index + 1}</p>
+                      <div className="deleteSelectedImg"  style={{display:JSON.stringify(selectedImg) != JSON.stringify(images) && "flex"}} onClick={() => deleteImg(image)}><img src={trashCan} alt="取消"/></div>
                     </div>
                   );
                 })
@@ -132,7 +133,10 @@ export default function Journal() {
             <label for="file-input">
               <img src={image} alt="上傳照片"/>
             </label>
-            <input onChange={onSelectFile} id="file-input" type="file" accept="image/png,image/jpeg" multiple="multiple"/>
+            <input 
+              onChange={onSelectFile} 
+              onClick={(event)=> {event.target.value = null}} 
+              id="file-input" type="file" accept="image/png,image/jpeg" multiple="multiple"/>
           </span>
           <textarea name="journal" value={value} onChange={(e) => setValue(e.target.value)} placeholder='日記...' ></textarea>
         </div>
