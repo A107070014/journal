@@ -19,6 +19,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import DatePicker from 'react-date-picker';
 
+
 export default function Journal() {
   const [openBook,setOpenBook] = useState(false); 
   const [value,setValue] = useState('');
@@ -55,8 +56,8 @@ export default function Journal() {
   const settings = {
     dots:false,
     arrows: false,
-    infinite:true,
-    slidesToShow:1,
+    infinite: selectedImg.length > 1,
+    slidesToShow: 2,
     slidesToScroll:1,
     autoplay:true,
     speed:5000,
@@ -108,9 +109,11 @@ export default function Journal() {
             <DatePicker
               onChange = {setdate}
               value = {date}
-              calendarIcon = {false}
-              clearIcon = {false}
-              required = {true}
+              dayPlaceholder = {"dd"}
+              monthPlaceholder = {"mm"}
+              yearPlaceholder = {"yyyy"}
+              locale= {"en"}
+              format = {"y/MM/dd"}
             />
           </div>
         </div>
@@ -146,7 +149,6 @@ export default function Journal() {
       </div>
       <div className="back-cover"></div>
     </div>
-    
   );
 }
 
