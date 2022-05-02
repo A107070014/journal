@@ -75,13 +75,13 @@ export default function Journal() {
             <p>我的個人日記</p>   
           </div>
         </div>
+        <div className="backArrow" onClick={()=>setOpenBook(!openBook)} style={{display:!openBook && 'none'}}>
+          <div className="closeBook" >
+            <img src={back} alt="闔上日記"/>
+          </div>
+        </div>
         <div className="back">
-          <div className="back-content">
-            <div className="backArrow" onClick={()=>setOpenBook(!openBook)}>
-              <div className="closeBook" >
-                <img src={back} alt="闔上日記"/>
-              </div>
-            </div>
+          <div className="back-content">  
             <div className="bar">
               <div className="picture">
                 <img src={picture} alt="大頭貼"/>
@@ -93,7 +93,31 @@ export default function Journal() {
               <div className="add">
                 <img src={add} alt="增加日記"/>
               </div>
-            </div>   
+            </div>
+            <div className="journalList">
+              <div className="journalDatge">2022/5/2</div>
+              <div className="journal">
+                <div className="journalInfo">
+                  <h4 className='journalTitle'>勞動節</h4>
+                  <p className='journalContent'>耶～今天不用上班</p>
+                </div>
+                <div className='journalPicture'>
+                  <img src={autoplay1} alt='picture' width={100} height={100}/>
+                </div>
+              </div>
+            </div>
+            {/* <div className="journalList">
+              <div className="journalDatge">2022/5/13</div>
+              <div className="journal">
+                <div className="journalInfo">
+                  <h4 className='journalTitle'>我的生日</h4>
+                  <div className='journalContent'>生日快樂</div>
+                </div>
+                <div className='journalPicture'>
+                  <img src={autoplay2} alt='picture' width={100}/>
+                </div>
+              </div>
+            </div>    */}
           </div>
         </div>
       </div>

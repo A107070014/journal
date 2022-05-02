@@ -25,6 +25,7 @@ body{
   width: 500px;
   height: 600px;
   transition: transform 0.5s;
+  
 }
 .cover{
   width: 100%;
@@ -45,6 +46,7 @@ body{
   top: 0;
   left: 0;
   z-index:-2;
+  
 }
 .page{
   width: 490px;
@@ -79,6 +81,7 @@ body{
   z-index: 1;
   backface-visibility: hidden;
   cursor: pointer;
+  
 }
 .back{
   z-index: -1;
@@ -87,6 +90,7 @@ body{
   background-image: url("https://www.transparenttextures.com/patterns/gray-floral.png");
   border: 5px solid var(--light-pink);
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: scroll;
 }
 .front-content{
   font-size: 30px;
@@ -105,8 +109,8 @@ body{
 .backArrow{
   width: 90px;
   position: absolute;
-  left: -45px;
-  bottom:-240px;
+  left: -550px;
+  top:300px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -134,11 +138,11 @@ body{
 @keyframes backArrow {
   0%,
   100% {
-    left: -40px;
+    left: -550px;
   }
 
   50% {
-    left: -60px;
+    left: -570px;
   }
 }
 .bar{
@@ -203,6 +207,39 @@ input:focus{
 }
 .add>img{
   width: 40%;
+}
+.journalList{
+  width: 100%;
+  padding: 0 20px;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+}
+.journalDatge{
+  border-bottom: 2px solid var(--light-pink);
+  font-weight: bold;
+  color: var(--light-pink);
+  line-height: 30px;
+}
+.journal{
+  display: flex;
+  justify-content: space-between;
+  line-height: 30px;
+  margin: 10px 0;
+}
+.journal:hover{
+  background-color: rgba(204, 204, 204, 0.22);
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+.journalPicture{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.journalPicture>img{
+  border-radius: 10px;
 }
 .closeBtn{
   position: absolute;
@@ -377,6 +414,7 @@ abbr[title]{
 .react-calendar__tile{
   height: 50px;
   margin: 2px 0 !important;
+  line-height: 1px !important;
 }
 .react-calendar__tile:hover{
   border-radius: 50%;
@@ -387,5 +425,17 @@ abbr[title]{
 }
 .react-calendar__tile--now{
   border-radius: 50% !important;
-  border: 2px solid var(--light-pink) !important;
+  /* background: transparent !important;
+  color: #000 !important;
+  border: 2px solid var(--light-pink) !important; */
+}
+.react-calendar__tile--now:enabled:focus {
+  background: var(--light-pink) !important;
+}
+.react-calendar__tile--now:enabled:hover{
+  background-color: var(--light-pink) !important;
+  color: #fff !important;
+}
+.react-calendar__tile--hasActive{
+  background-color: var(--light-pink) !important;
 }
