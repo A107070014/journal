@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/journal/static/css/main.cbff7045.css",
-    "main.js": "/journal/static/js/main.87e09164.js",
+    "main.js": "/journal/static/js/main.74aa3bb0.js",
     "static/media/background.png": "/journal/static/media/background.73bfb99c6f339cc00e91.png",
     "static/media/欣玫.jpg": "/journal/static/media/欣玫.ef915bf42af5760afe50.jpg",
     "static/media/autoplay3.jpg": "/journal/static/media/autoplay3.e468af65931dba1c3f86.jpg",
@@ -15,10 +15,10 @@
     "static/media/slick.woff": "/journal/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/journal/index.html",
     "main.cbff7045.css.map": "/journal/static/css/main.cbff7045.css.map",
-    "main.87e09164.js.map": "/journal/static/js/main.87e09164.js.map"
+    "main.74aa3bb0.js.map": "/journal/static/js/main.74aa3bb0.js.map"
   },
   "entrypoints": [
     "static/css/main.cbff7045.css",
-    "static/js/main.87e09164.js"
+    "static/js/main.74aa3bb0.js"
   ]
 }
