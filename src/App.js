@@ -18,15 +18,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import DatePicker from 'react-date-picker';
+import moment from "moment";
 
 
 export default function Journal() {
   const [openBook,setOpenBook] = useState(false); 
-  const [value,setValue] = useState('');
+
   const images = [autoplay1,autoplay2,autoplay3,autoplay4];
   const [selectedImg,setSelectedImg] = useState(images);
   const onSelectFile = (e) => {
-    
     const selectedFiles = e.target.files;
     const selectedFilesArray = Array.from(selectedFiles);
 
@@ -52,6 +52,7 @@ export default function Journal() {
     }
     
   }
+
   /*react-slick autoplay*/
   const settings = {
     dots:false,
@@ -65,8 +66,35 @@ export default function Journal() {
   };
 
   /*react-date-picker*/
-  const [date,setdate]  = useState(new Date()); 
+  const [date,setDate]  = useState(new Date()); 
+  const momentDate = moment(date).format('YYYY/MM/DD');
 
+  /*localstorage*/
+  const [title,setTitle] = useState('');
+  const [content,setContent] = useState(''); 
+
+  const inputTitle = (e) => {
+    const inputTitleValue = e.target.value;
+    setTitle(inputTitleValue);
+  }
+
+  const inputContent = (e) => {
+    const inputContentValue = e.target.value;
+    setContent(inputContentValue);
+  }
+  
+  const saveJournal = () => {
+    const journal = {
+      title,
+      momentDate,
+      selectedImg,
+      content,
+    }
+    localStorage.setItem('journal',JSON.stringify(journal));
+  }
+
+  
+  
   return (
     <div className="book" style={{transform:openBook && "translateX(50%)"}}>
       <div className={["cover",openBook && "flipped"].join(' ')} style={{zIndex:openBook && -1}}>
@@ -126,12 +154,12 @@ export default function Journal() {
         <div className="info">
           <div className="title">
             <img src={pen} alt="標題"/>
-            <input type="text" placeholder='標題...'/>
+            <input type="text" placeholder='標題...' value={title} onInput={inputTitle}/>
           </div>
           <div className="calendar">
             <img src={calendar} alt="日期"/>
             <DatePicker
-              onChange = {setdate}
+              onChange = {setDate}
               value = {date}
               dayPlaceholder = {"dd"}
               monthPlaceholder = {"mm"}
@@ -165,10 +193,10 @@ export default function Journal() {
               onClick={(event)=> {event.target.value = null}} 
               id="file-input" type="file" accept="image/png,image/jpeg" multiple="multiple"/>
           </span>
-          <textarea name="journal" value={value} onChange={(e) => setValue(e.target.value)} placeholder='日記...' ></textarea>
+          <textarea name="journal" value={content} onChange={inputContent} placeholder='日記...' ></textarea>
         </div>
         {openBook && <div className="saveBtn">
-          <img src={save} alt="儲存" width={30}/>
+          <img src={save} alt="儲存" width={30} onClick={saveJournal}/>
         </div>}
       </div>
       <div className="back-cover"></div>
