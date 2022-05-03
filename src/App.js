@@ -1,5 +1,5 @@
 import './App.css';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import picture from './img/欣玫.jpg';
 import search from './img/search.png';
 import image from './img/image.png';
@@ -83,17 +83,24 @@ export default function Journal() {
     setContent(inputContentValue);
   }
   
+  const [journalData,setJournalData] =useState(JSON.parse(localStorage.getItem('journal')))
+  var localData = localStorage.getItem('journal');
   const saveJournal = () => {
+    if (localData) {
+      localData = JSON.parse(localData);
+    } else {
+      localData = [] ;
+    }
     const journal = {
       title,
       momentDate,
       selectedImg,
       content,
     }
-    localStorage.setItem('journal',JSON.stringify(journal));
+    localData.push(journal);
+    localStorage.setItem('journal',JSON.stringify(localData));
+    setJournalData(JSON.parse(localStorage.getItem('journal')))
   }
-
-  
   
   return (
     <div className="book" style={{transform:openBook && "translateX(50%)"}}>
@@ -122,18 +129,20 @@ export default function Journal() {
                 <img src={add} alt="增加日記"/>
               </div>
             </div>
-            <div className="journalList">
-              <div className="journalDatge">2022/5/2</div>
+            {journalData && journalData.map((data,index)=> (
+            <div className="journalList" key={index}>
+              <div className="journalDatge">{data.momentDate}</div>
               <div className="journal">
                 <div className="journalInfo">
-                  <h4 className='journalTitle'>勞動節</h4>
-                  <p className='journalContent'>耶～今天不用上班</p>
+                  <h4 className='journalTitle'>{data.title}</h4>
+                  <p className='journalContent'>{data.content}</p>
                 </div>
                 <div className='journalPicture'>
-                  <img src={autoplay1} alt='picture' width={100} height={100}/>
+                  <img src={data.selectedImg[0]} alt='picture' width={100} height={100}/>
                 </div>
               </div>
             </div>
+            ))};
             {/* <div className="journalList">
               <div className="journalDatge">2022/5/13</div>
               <div className="journal">
