@@ -195,6 +195,7 @@ input:focus{
   border-radius: 50%;
   width: 50px;
   height: 50px;
+  padding: 10px;
   background-color: rgba(255, 255, 255);
   display: flex;
   justify-content: center;
@@ -253,6 +254,7 @@ input:focus{
   align-items: center;
   cursor: pointer;
   background-color: var(--main-color);
+  display: none;
 }
 .closeBtn:hover{
   background-color: var(--light-pink);
@@ -299,6 +301,11 @@ input:focus{
 .calendar>img{
   width: 30px;
 }
+
+.react-date-picker--disabled{
+  background-color: #fff !important;
+  color: #000 !important;
+}
 .content{
   width: 100%;
   height: 60%;
@@ -312,6 +319,7 @@ input:focus{
   border-bottom: 2px dashed var(--main-color);
   /* position: relative; */
 }
+
 .slick-list{
   width:100%;
 }
@@ -371,12 +379,13 @@ input:focus{
   border: transparent;
   padding:10px 10px;
   line-height: 20px;
+  letter-spacing: 2px;
   color: var(--text);
 }
 .content>textarea:focus{
   outline:none;
 }
-.saveBtn{
+.btn{
   position: absolute;
   bottom: -30px;
   background-color: var(--main-color);
@@ -388,8 +397,26 @@ input:focus{
   align-items: center;
   cursor: pointer;
 }
-.saveBtn:hover{
+.btn:hover,.editBtn:hover,.deleteBtn:hover{
   background-color: var(--light-pink);
+}
+.bothBtn{
+  width: 200px;
+  position: absolute;
+  bottom: -30px;
+  display: flex;
+  justify-content: space-around;
+  display: none;
+}
+.editBtn,.deleteBtn{
+  background-color: var(--main-color);
+  border-radius: 50%;
+  width: 55px;
+  height:55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 /*日期 react-date-picker*/
