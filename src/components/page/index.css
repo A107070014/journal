@@ -1,0 +1,217 @@
+.innerpage{
+    width: 490px;
+    height: 590px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+  }
+.info{
+    height: 10%;
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  .title>img{
+    width: 25px;
+  }
+  .title>input{
+    padding: 5px 5px;
+    border: transparent;
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--text);
+  }
+  .title:hover >img ,.calendar:hover img{
+    margin-bottom: 10px;
+  }
+  .title:hover >input{
+    border-bottom: 2px dotted #fece85;
+  }
+  .calendar{
+    width: 28%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .calendar:hover > .react-date-picker{
+    border-bottom: 2px dotted #fece85;
+    padding: 5px 1px;
+  }
+  .calendar>img{
+    width: 30px;
+  }
+  
+  .react-date-picker--disabled{
+    background-color: #fff !important;
+    color: #000 !important;
+  }
+  .content{
+    width: 100%;
+    height: 60%;
+    position: relative;
+  }
+  .content>div{
+    width:100%;
+    height: 73%;
+    /* overflow: hidden; */
+    border-top: 2px dashed var(--main-color);
+    border-bottom: 2px dashed var(--main-color);
+    /* position: relative; */
+  }
+  
+  .slick-list{
+    width:100%;
+  }
+  .slick-slide img{
+    height: 253px;
+    width: 100%;
+  }
+  .deleteSelectedImg{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--main-color);
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: none;
+  }
+  .deleteSelectedImg:hover{
+    background-color: var(--light-pink);
+  }
+  .deleteSelectedImg>img{
+    width: 25px;
+    height: 25px;
+  }
+  .uploadImage,#preview{
+    width: 100%;
+    height: 73%;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .uploadImage:hover{
+    background-color: #cac5c55e;
+    cursor: pointer;
+  }
+  .uploadImage:hover >label>img{
+    display: block;
+    cursor: pointer;
+  }
+  .uploadImage>label>img{
+    display: none;
+    width: 50px;
+  }
+  .uploadImage>input{
+    display: none;
+  }
+  .content>textarea{
+    width: 100%;
+    height: 76%;
+    border: transparent;
+    padding:10px 10px;
+    line-height: 20px;
+    letter-spacing: 2px;
+    color: var(--text);
+  }
+  .content>textarea:focus{
+    outline:none;
+  }
+  .btn{
+    position: absolute;
+    bottom: -30px;
+    background-color: var(--main-color);
+    border-radius: 50%;
+    width: 55px;
+    height:55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .editSaveJournal{
+    display: none;
+  }
+  .btn:hover,.editBtn:hover,.deleteBtn:hover{
+    background-color: var(--light-pink);
+  }
+  .bothBtn{
+    width: 200px;
+    position: absolute;
+    bottom: -30px;
+    display: flex;
+    justify-content: space-around;
+  }
+  .editBtn,.deleteBtn{
+    background-color: var(--main-color);
+    border-radius: 50%;
+    width: 55px;
+    height:55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  /*日期 react-date-picker*/
+  .react-date-picker__calendar{
+    margin-top: 10px;
+  }
+  .react-date-picker__wrapper{
+    border:none !important;
+  }
+  .react-date-picker__button{
+    display: none;
+  }
+  .react-calendar{
+    border: none !important; 
+    border-radius: 5px;
+    box-shadow: 0 0 10px 5px #cecccc;
+    padding:5px;
+  }
+  abbr[title]{
+    text-decoration: none !important;
+  }
+  .react-calendar__tile{
+    height: 50px;
+    margin: 2px 0 !important;
+    line-height: 1px !important;
+  }
+  .react-calendar__tile:hover{
+    border-radius: 50%;
+  }
+  .react-calendar__tile--active{
+    border-radius: 50% !important;
+    background-color: var(--light-pink) !important;
+  }
+  .react-calendar__tile--now{
+    border-radius: 50% !important;
+    /* background: transparent !important;
+    color: #000 !important;
+    border: 2px solid var(--light-pink) !important; */
+  }
+  .react-calendar__tile--now:enabled:focus {
+    background: var(--light-pink) !important;
+  }
+  .react-calendar__tile--now:enabled:hover{
+    background-color: var(--light-pink) !important;
+    color: #fff !important;
+  }
+  .react-calendar__tile--hasActive{
+    background-color: var(--light-pink) !important;
+  }
