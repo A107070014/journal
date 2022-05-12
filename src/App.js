@@ -2,22 +2,19 @@ import './App.css';
 import {useEffect, useState} from 'react';
 import picture from './img/欣玫.jpg';
 import search from './img/search.png';
-
 import add from './img/add.png';
 import add2 from './img/add2.png';
-
 import close from './img/close.png';
-
 import back from './img/back.png';
-
 import Page from './components/page';
 
 export default function Journal() {
-  const [openBook,setOpenBook] = useState(false); 
+  const [openBook,setOpenBook] = useState(false);
+  const [readOnly,setReadOnly] = useState(true); 
   const [journalData,setJournalData] =useState(JSON.parse(localStorage.getItem('journal')));
   const [data,setData] = useState({id:0,title:'',content:'',momentDate:'',selectedImg:''});
   //page狀態
-  const [status,setStatus] = useState('look');
+  const [status,setStatus] = useState();
   useEffect(() => {
     setJournalData(JSON.parse(localStorage.getItem('journal')))
   },[status,data]);
@@ -37,37 +34,38 @@ export default function Journal() {
       setData({id:-1,title:'',content:'',momentDate:'',selectedImg:''})
     } else {
       setData(journalData[index]);
-      console.log(journalData[index]);
     }
+    const closeBtn = document.querySelector('.closeBtn');
+    closeBtn.style.display = 'flex';
+
+  }
+  var localData = localStorage.getItem('journal');
+  const saveData = (journal) => {
+    console.log(journal);
+    if (localData) {
+      localData = JSON.parse(localData);
+    } else {
+      localData = [] ;
+    }
+    localData.push(journal);
+    localStorage.setItem('journal',JSON.stringify(localData));
+    setJournalData(JSON.parse(localStorage.getItem('journal')));
+    setReadOnly(!readOnly);
+  }
+  const editData = (editDataId) => {
+    setReadOnly(!readOnly);
+    const id = editDataId;
+  }
+  // const addData = () => {
+  //   setTitle('');
+  //   setDate(new Date());
+  //   setReadOnly(readOnly);
+  //   setSelectedImg(images);
+  //   setContent('');
     
-  }
-
-  function setDataFunction(id) {
-    console.log(id)
-  }
-
-  // const saveJournal = () => {
-  //   if (localData) {
-  //     localData = JSON.parse(localData);
-  //   } else {
-  //     localData = [] ;
-  //   }
-  //   const _journal = {
-  //     id,
-  //     title,
-  //     momentDate,
-  //     selectedImg,
-  //     content,
-  //   }
-  //   localData.push(_journal);
-  //   localStorage.setItem('journal',JSON.stringify(localData));
-  //   setJournalData(JSON.parse(localStorage.getItem('journal')));
-  //   setReadOnly(true);
-  //   const closeBtn = document.querySelector('.closeBtn');
-  //   closeBtn.style.display = 'none';
-  //   setId(id+1);
-  //   localStorage.setItem('id',id);
+  //   setId(JSON.parse(localStorage.getItem('id'))+1);
   // }
+
   return (
     <div className="book" style={{transform:openBook && "translateX(50%)"}}>
       <div className={["cover",openBook && "flipped"].join(' ')} style={{zIndex:openBook && -1}}>
@@ -102,7 +100,7 @@ export default function Journal() {
                   <p className='journalContent'>{data.content}</p>
                 </div>
                 <div className='journalPicture'>
-                  <img src={data.selectedImg[0]} alt='picture' width={100} height={100}/>
+                  {/* <img src={data.selectedImg[0]} alt='picture' width={100} height={100}/> */}
                 </div>
               </div>
             </div>
@@ -122,9 +120,16 @@ export default function Journal() {
           </div>
         </div>
       </div>
-      {openBook &&<div className="closeBtn" ><img src={close} alt="取消" width={15}/></div>}
+      {(openBook && !readOnly) && <div className="closeBtn" ><img src={close} alt="取消" width={15}/></div>}
       <div className="page">
-        <Page openBook={openBook} status={status} data={data} setData={setDataFunction}/>
+        <Page 
+          openBook={openBook} 
+          status={status} 
+          data={data} 
+          saveData={saveData} 
+          readOnly={readOnly}
+          editData={editData}
+        />
       </div>
       <div className="back-cover"></div>
     </div>

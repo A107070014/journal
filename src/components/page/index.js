@@ -20,12 +20,9 @@ import autoplay4 from '../../img/autoplay4.jpg';
 
 import moment from "moment";
 
-export default function Page({openBook,status,data,setData}) {
-    let readOnlyStatus = status === 'look' ? true : false
-    console.log(readOnlyStatus);
-    const [id,setId] =useState(0)
-    const images = [autoplay1,autoplay2,autoplay3,autoplay4];
-    const [selectedImg,setSelectedImg] = useState(images);
+export default function Page({openBook,status,data,saveData,readOnly,editData}) {
+  const images = [autoplay1,autoplay2,autoplay3,autoplay4];
+  const [selectedImg,setSelectedImg] = useState(images);
   /*選擇照片&預覽照片*/
   const onSelectFile = (e) => {
     const selectedFiles = e.target.files;
@@ -71,9 +68,8 @@ export default function Page({openBook,status,data,setData}) {
   const [date,setDate]  = useState(new Date()); 
   const momentDate = moment(date).format('YYYY/MM/DD');
 
-  
 
-    /*localstorage*/
+  /*localstorage*/
   const [title,setTitle] = useState('');
   const [content,setContent] = useState(''); 
 
@@ -86,16 +82,16 @@ export default function Page({openBook,status,data,setData}) {
     const inputContentValue = e.target.value;
     setContent(inputContentValue);
   }
-  
-  const [journalData,setJournalData] =useState(JSON.parse(localStorage.getItem('journal')))
-  var localData = localStorage.getItem('journal');
-  const [readOnly,setReadOnly] = useState(status === 'look' ? true : false);
+
+  let id = localStorage.getItem('id')
   const saveJournal = () => {
-    if (localData) {
-      localData = JSON.parse(localData);
+    
+    if (id) {
+      id = JSON.parse(id) + 1;
     } else {
-      localData = [] ;
+      id = 0 ;
     }
+    localStorage.setItem('id',id)
     const _journal = {
       id,
       title,
@@ -103,46 +99,24 @@ export default function Page({openBook,status,data,setData}) {
       selectedImg,
       content,
     }
-    localData.push(_journal);
-    localStorage.setItem('journal',JSON.stringify(localData));
-    setJournalData(JSON.parse(localStorage.getItem('journal')));
-    setReadOnly(readOnly);
-    const closeBtn = document.querySelector('.closeBtn');
-    closeBtn.style.display = 'none';
-    setId(id+1);
-    localStorage.setItem('id',id);
+    saveData(_journal)
   }
 
-  const addJournal = () => {
-    setTitle('');
-    setDate(new Date());
-    setReadOnly(false);
-    setSelectedImg(images);
-    setContent('');
-    const closeBtn = document.querySelector('.closeBtn');
-    closeBtn.style.display = 'flex';
-    setId(JSON.parse(localStorage.getItem('id'))+1);
-  }
+  // const addJournal = () => {
+  //   setTitle('');
+  //   setDate(new Date());
+  //   setReadOnly(readOnly);
+  //   setSelectedImg(images);
+  //   setContent('');
+  //   const closeBtn = document.querySelector('.closeBtn');
+  //   closeBtn.style.display = 'flex';
+  //   setId(JSON.parse(localStorage.getItem('id'))+1);
+  // }
 
   const editJournal = () => {
-    const saveJournal = document.querySelector('.saveJournal');
-    saveJournal.style.display = 'none';
-    // const editSaveJournal = document.querySelector('.editSaveJournal');
-    // editSaveJournal.style.display = 'flex';
-
-    console.log(id-2)
-    const editJournalId = id-1;
-    const journal = JSON.parse(localStorage.getItem('journal'));
-    const title = journal[editJournalId]['title'];
-    console.log(title)
-    // const momentDate = journal[editJournalId]['momentDate'];
-    const selectedImg = journal[editJournalId]['selectedImg'];
-    const content = journal[editJournalId]['content'];
-    setTitle(title);
-    // setDate(momentDate);
-    setSelectedImg(selectedImg);
-    setContent(content);
-    setId(editJournalId);
+    
+    status = 'add' ;
+    editData(id,);
   }
    
   return (
@@ -150,9 +124,9 @@ export default function Page({openBook,status,data,setData}) {
         <div className="info">
           <div className="title">
             <img src={pen} alt="標題"/>
-            <input type="text" placeholder={data.title !== '' ? data.title : '標題...'} value={title} onInput={inputTitle} readOnly={readOnly}/>
+            <input type="text" placeholder={data.title !== '' ? data.title : '標題...'} value={title} onInput={inputTitle} readOnly={!readOnly}/>
           </div>
-          <input type='number' value={id}  onChange={saveJournal} />
+          <input type='text' className='id' value={id}  onChange={saveJournal} />
           <div className="calendar">
             <img src={calendar} alt="日期"/>
             <DatePicker
@@ -163,7 +137,7 @@ export default function Page({openBook,status,data,setData}) {
               yearPlaceholder = {"yyyy"}
               locale= {"en"}
               format = {"y/MM/dd"}
-              disabled = {readOnly}
+              disabled = {!readOnly}
             />
           </div>
         </div>
@@ -175,14 +149,14 @@ export default function Page({openBook,status,data,setData}) {
                   return (
                     <div key={image} >
                       <img src={image} alt="upload" />
-                      <div className="deleteSelectedImg" style={{display: readOnly ? 'none' : JSON.stringify(selectedImg) != JSON.stringify(images) && 'flex'}} onClick={() => deleteImg(image)}><img src={trashCan} alt="刪除"/></div>
+                      <div className="deleteSelectedImg" style={{display: !readOnly ? 'none' : JSON.stringify(selectedImg) != JSON.stringify(images) && 'flex'}} onClick={() => deleteImg(image)}><img src={trashCan} alt="刪除"/></div>
                     </div>
                   );
                 })
               }
             </Slider>
           </div>          
-          <span className="uploadImage" style={{display:readOnly && "none"}}>
+          <span className="uploadImage" style={{display:!readOnly && "none"}}>
             <label for="file-input">
               <img src={image} alt="上傳照片"/>
             </label>
@@ -192,19 +166,19 @@ export default function Page({openBook,status,data,setData}) {
               id="file-input" type="file" accept="image/png,image/jpeg" 
               multiple="multiple"/>
           </span>
-          <textarea name="journal" value={content} onChange={inputContent} placeholder='日記...' readOnly={readOnly}></textarea>
+          <textarea name="journal" value={content} onChange={inputContent} placeholder='日記...' readOnly={!readOnly}></textarea>
         </div>
-        {(openBook && status === 'add') && <div className="btn saveJournal" onClick={saveJournal}>
+        {(openBook && readOnly) && <div className="btn saveJournal" onClick={saveJournal}>
           <img src={save} alt="儲存" width={30} />
         </div>} 
         {/* {openBook && <div className="btn editSaveJournal">
           <img src={save} alt="儲存" width={30} onClick={editSaveJournal}/>
         </div>}  */}
-        {(openBook && status === 'look') && <div className='bothBtn'>
+        {(openBook && !readOnly) && <div className='bothBtn'>
           <div className="deleteBtn" >
             <img src={trashCan} alt="刪除" width={30}/>
           </div>
-          <div className="editBtn" onClick={() => {editJournal();setReadOnly(!readOnly);document.querySelector('.closeBtn').style.display='flex'}} >
+          <div className="editBtn" onClick={() => {editJournal();document.querySelector('.closeBtn').style.display='flex'}} >
             <img src={edit} alt="編輯" width={30} />
           </div>
         </div>}
