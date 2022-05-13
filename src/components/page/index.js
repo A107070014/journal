@@ -65,12 +65,12 @@ export default function Page({openBook,status,data,saveData,readOnly,editData}) 
   };
 
   /*react-date-picker*/
-  const [date,setDate]  = useState(new Date()); 
+  const [date,setDate]  = useState(''); 
   const momentDate = moment(date).format('YYYY/MM/DD');
-  console.log(moment(date).get('year'));
-  console.log(moment(date).get('month')+1);
-  console.log(moment(date).get('date'));
-  console.log(data.momentDate !== momentDate ? moment(data.momentDate).get('date') : "DD");
+  // console.log(moment(date).get('year'));
+  // console.log(moment(date).get('month')+1);
+  // console.log(moment(date).get('date'));
+  // console.log(data.momentDate !== momentDate ? data.momentDate : momentDate);
 
 
   /*localstorage*/
@@ -136,9 +136,9 @@ export default function Page({openBook,status,data,saveData,readOnly,editData}) 
             <DatePicker
               onChange = {setDate}
               value = {date}
-              dayPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('date') : moment(data).get('date')}
-              monthPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('month')+1 : moment(data).get('month')+1}
-              yearPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('year') : moment(data).get('year')}
+              dayPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('date') : moment(date).get('date')}
+              monthPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('month')+1 : moment(date).get('month')+1}
+              yearPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('year') : moment(date).get('year')}
               locale= {"en"}
               format = {"y/MM/dd"}
               disabled = {!readOnly}

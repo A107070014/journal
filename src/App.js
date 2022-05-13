@@ -34,14 +34,14 @@ export default function Journal() {
     setStatus(status);
     if (status === 'add') {
       const id = localStorage.getItem('id');
-      // const date = new Date();
-      // const momentDate = moment(date).format('YYYY/MM/DD');
-      setData({id:id,title:'',content:'',momentDate:'',selectedImg:''})
+      const date = new Date();
+      const momentDate = moment(date).format('YYYY/MM/DD');
+      setData({id:id,title:'',content:'',momentDate:momentDate,selectedImg:''});
+      console.log(data);
     } else {
       setData(journalData[index]);
     }
-    const closeBtn = document.querySelector('.closeBtn');
-    closeBtn.style.display = 'flex';
+    
 
   }
   var localData = localStorage.getItem('journal');
