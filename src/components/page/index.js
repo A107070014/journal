@@ -67,6 +67,10 @@ export default function Page({openBook,status,data,saveData,readOnly,editData}) 
   /*react-date-picker*/
   const [date,setDate]  = useState(new Date()); 
   const momentDate = moment(date).format('YYYY/MM/DD');
+  console.log(moment(date).get('year'));
+  console.log(moment(date).get('month')+1);
+  console.log(moment(date).get('date'));
+  console.log(data.momentDate !== momentDate ? moment(data.momentDate).get('date') : "DD");
 
 
   /*localstorage*/
@@ -126,15 +130,15 @@ export default function Page({openBook,status,data,saveData,readOnly,editData}) 
             <img src={pen} alt="標題"/>
             <input type="text" placeholder={data.title !== '' ? data.title : '標題...'} value={title} onInput={inputTitle} readOnly={!readOnly}/>
           </div>
-          <input type='text' className='id' value={id}  onChange={saveJournal} />
+          <input type='text' className='id' value={data.id !== id ? data.id : id}  onChange={saveJournal} />
           <div className="calendar">
             <img src={calendar} alt="日期"/>
             <DatePicker
               onChange = {setDate}
               value = {date}
-              dayPlaceholder = {"dd"}
-              monthPlaceholder = {"mm"}
-              yearPlaceholder = {"yyyy"}
+              dayPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('date') : moment(data).get('date')}
+              monthPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('month')+1 : moment(data).get('month')+1}
+              yearPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('year') : moment(data).get('year')}
               locale= {"en"}
               format = {"y/MM/dd"}
               disabled = {!readOnly}
@@ -166,7 +170,7 @@ export default function Page({openBook,status,data,saveData,readOnly,editData}) 
               id="file-input" type="file" accept="image/png,image/jpeg" 
               multiple="multiple"/>
           </span>
-          <textarea name="journal" value={content} onChange={inputContent} placeholder='日記...' readOnly={!readOnly}></textarea>
+          <textarea name="journal" value={content} onChange={inputContent} placeholder={data.content !== '' ? data.content : '日記...'} readOnly={!readOnly}></textarea>
         </div>
         {(openBook && readOnly) && <div className="btn saveJournal" onClick={saveJournal}>
           <img src={save} alt="儲存" width={30} />

@@ -8,6 +8,8 @@ import close from './img/close.png';
 import back from './img/back.png';
 import Page from './components/page';
 
+import moment from 'moment';
+
 export default function Journal() {
   const [openBook,setOpenBook] = useState(false);
   const [readOnly,setReadOnly] = useState(true); 
@@ -30,8 +32,11 @@ export default function Journal() {
 
   function toPage(status,index) {
     setStatus(status);
-    if (index === undefined) {
-      setData({id:-1,title:'',content:'',momentDate:'',selectedImg:''})
+    if (status === 'add') {
+      const id = localStorage.getItem('id');
+      // const date = new Date();
+      // const momentDate = moment(date).format('YYYY/MM/DD');
+      setData({id:id,title:'',content:'',momentDate:'',selectedImg:''})
     } else {
       setData(journalData[index]);
     }
@@ -54,17 +59,9 @@ export default function Journal() {
   }
   const editData = (editDataId) => {
     setReadOnly(!readOnly);
-    const id = editDataId;
+    // const id = editDataId;
   }
-  // const addData = () => {
-  //   setTitle('');
-  //   setDate(new Date());
-  //   setReadOnly(readOnly);
-  //   setSelectedImg(images);
-  //   setContent('');
-    
-  //   setId(JSON.parse(localStorage.getItem('id'))+1);
-  // }
+  
 
   return (
     <div className="book" style={{transform:openBook && "translateX(50%)"}}>
