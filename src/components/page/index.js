@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import './index.css'
 //slider datepicker
 import Slider from "react-slick";
@@ -21,8 +21,12 @@ import autoplay4 from '../../img/autoplay4.jpg';
 import moment from "moment";
 
 export default function Page({openBook,status,data,saveData,readOnly,editData}) {
+  console.log(status==='add' && true);
+  console.log(data.selectedImg);
   const images = [autoplay1,autoplay2,autoplay3,autoplay4];
   const [selectedImg,setSelectedImg] = useState(images);
+
+  
   /*選擇照片&預覽照片*/
   const onSelectFile = (e) => {
     const selectedFiles = e.target.files;
@@ -40,6 +44,8 @@ export default function Page({openBook,status,data,saveData,readOnly,editData}) 
       ));
     }
   }; 
+  // console.log(JSON.stringify(data.selectedImg) !== JSON.stringify(selectedImg) ? data.selectedImg : selectedImg);
+
 
   /*刪除照片*/
   function deleteImg(data) {
@@ -61,7 +67,7 @@ export default function Page({openBook,status,data,saveData,readOnly,editData}) 
     slidesToScroll:1,
     autoplay:true,
     speed:5000,
-    autoplaySpeed:100000
+    autoplaySpeed:1
   };
 
   /*react-date-picker*/
@@ -148,11 +154,12 @@ export default function Page({openBook,status,data,saveData,readOnly,editData}) 
         <div className="content">
           <div>
             <Slider {...settings}>
-              {selectedImg &&
+              {selectedImg  &&
                 selectedImg.map((image) => {
                   return (
-                    <div key={image} >
-                      <img src={image} alt="upload" />
+                    <div key={image}>
+                      {/* JSON.stringify(data.selectedImg) !== JSON.stringify(selectedImg) ? data.selectedImg : image */}
+                      <img src={status !== 'look' ? image : data.selectedImg.src} alt="upload"/>
                       <div className="deleteSelectedImg" style={{display: !readOnly ? 'none' : JSON.stringify(selectedImg) != JSON.stringify(images) && 'flex'}} onClick={() => deleteImg(image)}><img src={trashCan} alt="刪除"/></div>
                     </div>
                   );

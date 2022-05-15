@@ -8,6 +8,11 @@ import close from './img/close.png';
 import back from './img/back.png';
 import Page from './components/page';
 
+// import autoplay1 from './img/autoplay1.jpg';
+// import autoplay2 from './img/autoplay2.jpg';
+// import autoplay3 from './img/autoplay3.jpg';
+// import autoplay4 from './img/autoplay4.jpg';
+
 import moment from 'moment';
 
 export default function Journal() {
@@ -20,7 +25,7 @@ export default function Journal() {
   useEffect(() => {
     setJournalData(JSON.parse(localStorage.getItem('journal')))
   },[status,data]);
-
+ 
 
   /*onmouseover、nomouseout*/
   const hoverAddIcon = (e) => {
@@ -37,12 +42,11 @@ export default function Journal() {
       const date = new Date();
       const momentDate = moment(date).format('YYYY/MM/DD');
       setData({id:id,title:'',content:'',momentDate:momentDate,selectedImg:''});
-      console.log(data);
+      setReadOnly(true)
     } else {
-      setData(journalData[index]);
+      setData(journalData[index]); 
+      setReadOnly(false)
     }
-    
-
   }
   var localData = localStorage.getItem('journal');
   const saveData = (journal) => {
@@ -89,7 +93,7 @@ export default function Journal() {
               <img className="add" src={add} alt="增加日記" onClick={() => toPage('add')}  onMouseOver={hoverAddIcon} onMouseOut={outAddIcon}/>
             </div>
             {journalData && journalData.map((data,index)=> (
-            <div className="journalList" key={index} onClick={() => toPage('look',index)}>
+            <div className="journalList" key={index} onClick={() => toPage('look',index)} >
               <div className="journalDate">{data.momentDate}</div>
               <div className="journal">
                 <div className="journalInfo">
@@ -97,7 +101,7 @@ export default function Journal() {
                   <p className='journalContent'>{data.content}</p>
                 </div>
                 <div className='journalPicture'>
-                  {/* <img src={data.selectedImg[0]} alt='picture' width={100} height={100}/> */}
+                  <img src={data.selectedImg[0]} alt='picture' width={100} height={100}/>
                 </div>
               </div>
             </div>
