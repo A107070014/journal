@@ -20,12 +20,17 @@ import autoplay4 from '../../img/autoplay4.jpg';
 
 import moment from "moment";
 
-export default function Page({openBook,status,data,saveData,readOnly,editData}) {
-  console.log(status==='add' && true);
-  console.log(data.selectedImg);
+export default function Page({openBook,status,data,saveData,readOnly,editData,display}) {
+  
+  // console.log(status==='add' && true);
+  // console.log(data.selectedImg);
   const images = [autoplay1,autoplay2,autoplay3,autoplay4];
   const [selectedImg,setSelectedImg] = useState(images);
-
+  
+  // useEffect(() => {
+  //   status === 'look' && JSON.stringify(data.selectedImg) !== JSON.stringify(images) ? setSelectedImg(data.selectedImg) : setSelectedImg(images)
+  // },[selectedImg]);
+  
   
   /*選擇照片&預覽照片*/
   const onSelectFile = (e) => {
@@ -71,14 +76,14 @@ export default function Page({openBook,status,data,saveData,readOnly,editData}) 
   };
 
   /*react-date-picker*/
-  const [date,setDate]  = useState(''); 
+  const [date,setDate]  = useState(new Date()); 
   const momentDate = moment(date).format('YYYY/MM/DD');
   // console.log(moment(date).get('year'));
   // console.log(moment(date).get('month')+1);
   // console.log(moment(date).get('date'));
   // console.log(data.momentDate !== momentDate ? data.momentDate : momentDate);
-
-
+  // console.log(readOnly === true ? 1 : 0 )
+  
   /*localstorage*/
   const [title,setTitle] = useState('');
   const [content,setContent] = useState(''); 
@@ -112,23 +117,36 @@ export default function Page({openBook,status,data,saveData,readOnly,editData}) 
     saveData(_journal)
   }
 
-  // const addJournal = () => {
-  //   setTitle('');
-  //   setDate(new Date());
-  //   setReadOnly(readOnly);
-  //   setSelectedImg(images);
-  //   setContent('');
-  //   const closeBtn = document.querySelector('.closeBtn');
-  //   closeBtn.style.display = 'flex';
-  //   setId(JSON.parse(localStorage.getItem('id'))+1);
-  // }
-
+  
   const editJournal = () => {
     
     status = 'add' ;
-    editData(id,);
+    editData(data.id);
+    
+    
+  }
+
+  const editSaveJournal = () => {
+    data.title=title;
+    data.momentDate=momentDate;
+    data.selectedImg=selectedImg;
+    data.content=content;
+    
+    saveData(data)
+    console.log(data)
   }
    
+  useEffect(() => {
+    if(status==='look' && readOnly === false){
+      setDate('');
+      setTitle('');
+      setContent('');
+    }
+  },[date,title,content,status,readOnly]);
+
+  
+  
+
   return (
     <div className="innerpage">
         <div className="info">
@@ -159,7 +177,7 @@ export default function Page({openBook,status,data,saveData,readOnly,editData}) 
                   return (
                     <div key={image}>
                       {/* JSON.stringify(data.selectedImg) !== JSON.stringify(selectedImg) ? data.selectedImg : image */}
-                      <img src={status !== 'look' ? image : data.selectedImg.src} alt="upload"/>
+                      <img src={image} alt="upload"/>
                       <div className="deleteSelectedImg" style={{display: !readOnly ? 'none' : JSON.stringify(selectedImg) != JSON.stringify(images) && 'flex'}} onClick={() => deleteImg(image)}><img src={trashCan} alt="刪除"/></div>
                     </div>
                   );
@@ -178,18 +196,18 @@ export default function Page({openBook,status,data,saveData,readOnly,editData}) 
               multiple="multiple"/>
           </span>
           <textarea name="journal" value={content} onChange={inputContent} placeholder={data.content !== '' ? data.content : '日記...'} readOnly={!readOnly}></textarea>
-        </div>
-        {(openBook && readOnly) && <div className="btn saveJournal" onClick={saveJournal}>
+          </div>
+        {(openBook && readOnly && display) && <div className="btn saveJournal" onClick={saveJournal}>
           <img src={save} alt="儲存" width={30} />
         </div>} 
-        {/* {openBook && <div className="btn editSaveJournal">
+        {(openBook && readOnly && !display) && <div className="btn editSaveJournal" >
           <img src={save} alt="儲存" width={30} onClick={editSaveJournal}/>
-        </div>}  */}
+        </div>}
         {(openBook && !readOnly) && <div className='bothBtn'>
           <div className="deleteBtn" >
             <img src={trashCan} alt="刪除" width={30}/>
           </div>
-          <div className="editBtn" onClick={() => {editJournal();document.querySelector('.closeBtn').style.display='flex'}} >
+          <div className="editBtn" onClick={editJournal}>
             <img src={edit} alt="編輯" width={30} />
           </div>
         </div>}

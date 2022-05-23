@@ -29,6 +29,9 @@
     font-size: 16px;
     color: var(--text);
   }
+  .title>input::placeholder{
+    color: var(--text);
+  }
   .title:hover >img ,.calendar:hover img{
     margin-bottom: 10px;
   }
@@ -48,10 +51,12 @@
   .calendar>img{
     width: 30px;
   }
-  
   .react-date-picker--disabled{
     background-color: #fff !important;
     color: #000 !important;
+  }
+  .react-date-picker__inputGroup>input::placeholder{
+    color: var(--text);
   }
   .content{
     width: 100%;
@@ -66,7 +71,9 @@
     border-bottom: 2px dashed var(--main-color);
     /* position: relative; */
   }
-  
+  .content>textarea::placeholder{
+    color: var(--text);
+  }
   .slick-list{
     width:100%;
   }
@@ -144,9 +151,7 @@
     align-items: center;
     cursor: pointer;
   }
-  .editSaveJournal{
-    display: none;
-  }
+  
   .btn:hover,.editBtn:hover,.deleteBtn:hover{
     background-color: var(--light-pink);
   }

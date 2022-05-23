@@ -254,7 +254,6 @@ input:focus{
   align-items: center;
   cursor: pointer;
   background-color: var(--main-color);
-  display: none;
 }
 .closeBtn:hover{
   background-color: var(--light-pink);

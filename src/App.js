@@ -8,6 +8,8 @@ import close from './img/close.png';
 import back from './img/back.png';
 import Page from './components/page';
 
+
+
 // import autoplay1 from './img/autoplay1.jpg';
 // import autoplay2 from './img/autoplay2.jpg';
 // import autoplay3 from './img/autoplay3.jpg';
@@ -18,6 +20,7 @@ import moment from 'moment';
 export default function Journal() {
   const [openBook,setOpenBook] = useState(false);
   const [readOnly,setReadOnly] = useState(true); 
+  const [display,setDisplay] = useState(false);
   const [journalData,setJournalData] =useState(JSON.parse(localStorage.getItem('journal')));
   const [data,setData] = useState({id:0,title:'',content:'',momentDate:'',selectedImg:''});
   //page狀態
@@ -42,10 +45,12 @@ export default function Journal() {
       const date = new Date();
       const momentDate = moment(date).format('YYYY/MM/DD');
       setData({id:id,title:'',content:'',momentDate:momentDate,selectedImg:''});
-      setReadOnly(true)
+      setReadOnly(true);
+      setDisplay(true);
     } else {
       setData(journalData[index]); 
-      setReadOnly(false)
+      setReadOnly(false);
+      setDisplay(false);
     }
   }
   var localData = localStorage.getItem('journal');
@@ -53,7 +58,7 @@ export default function Journal() {
     console.log(journal);
     if (localData) {
       localData = JSON.parse(localData);
-    } else {
+    }else {
       localData = [] ;
     }
     localData.push(journal);
@@ -64,6 +69,7 @@ export default function Journal() {
   const editData = (editDataId) => {
     setReadOnly(!readOnly);
     // const id = editDataId;
+
   }
   
 
@@ -121,7 +127,7 @@ export default function Journal() {
           </div>
         </div>
       </div>
-      {(openBook && !readOnly) && <div className="closeBtn" ><img src={close} alt="取消" width={15}/></div>}
+      {(openBook && readOnly && display) && <div className="closeBtn" ><img src={close} alt="取消" width={15}/></div>}
       <div className="page">
         <Page 
           openBook={openBook} 
@@ -130,6 +136,7 @@ export default function Journal() {
           saveData={saveData} 
           readOnly={readOnly}
           editData={editData}
+          display={display}
         />
       </div>
       <div className="back-cover"></div>
