@@ -151,7 +151,9 @@
     align-items: center;
     cursor: pointer;
   }
-  
+  .editSaveJournal{
+    /* display: flex; */
+  }
   .btn:hover,.editBtn:hover,.deleteBtn:hover{
     background-color: var(--light-pink);
   }

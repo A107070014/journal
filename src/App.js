@@ -24,52 +24,61 @@ export default function Journal() {
   const [journalData,setJournalData] =useState(JSON.parse(localStorage.getItem('journal')));
   const [data,setData] = useState({id:0,title:'',content:'',momentDate:'',selectedImg:''});
   //page狀態
-  const [status,setStatus] = useState();
+  const [status,setStatus] = useState('');
   useEffect(() => {
     setJournalData(JSON.parse(localStorage.getItem('journal')))
-  },[status,data]);
+  },[status,data,readOnly]);
  
 
-  /*onmouseover、nomouseout*/
+  //onmouseover、nomouseout
   const hoverAddIcon = (e) => {
     e.target.src = add2;
   }
   const outAddIcon = (e) => {
     e.target.src = add;
   }
-
+  console.log(status);
+  //日記狀態
   function toPage(status,index) {
     setStatus(status);
+    console.log('123');
+    console.log(status);
     if (status === 'add') {
       const id = localStorage.getItem('id');
       const date = new Date();
       const momentDate = moment(date).format('YYYY/MM/DD');
       setData({id:id,title:'',content:'',momentDate:momentDate,selectedImg:''});
       setReadOnly(true);
-      setDisplay(true);
+      setDisplay(false);
     } else {
       setData(journalData[index]); 
       setReadOnly(false);
-      setDisplay(false);
+      setDisplay(true);
     }
   }
+
+  //儲存日記
   var localData = localStorage.getItem('journal');
-  const saveData = (journal) => {
-    console.log(journal);
-    if (localData) {
-      localData = JSON.parse(localData);
-    }else {
-      localData = [] ;
+  const saveData = (journal,type) => {
+    const editId = journal.id;
+    localData = localData ? JSON.parse(localData) : [] ;
+
+    if(type === 0){
+      localData.push(journal);
+    }else{
+      localData[editId] = journal;
     }
-    localData.push(journal);
+
     localStorage.setItem('journal',JSON.stringify(localData));
     setJournalData(JSON.parse(localStorage.getItem('journal')));
     setReadOnly(!readOnly);
+    setStatus('');
   }
-  const editData = (editDataId) => {
+  
+
+  const editData = (editStatus) => {
     setReadOnly(!readOnly);
     // const id = editDataId;
-
   }
   
 
@@ -107,7 +116,7 @@ export default function Journal() {
                   <p className='journalContent'>{data.content}</p>
                 </div>
                 <div className='journalPicture'>
-                  <img src={data.selectedImg[0]} alt='picture' width={100} height={100}/>
+                  {/* <img src={data.selectedImg[0]} alt='picture' width={100} height={100}/> */}
                 </div>
               </div>
             </div>

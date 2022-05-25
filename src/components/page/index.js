@@ -21,7 +21,6 @@ import autoplay4 from '../../img/autoplay4.jpg';
 import moment from "moment";
 
 export default function Page({openBook,status,data,saveData,readOnly,editData,display}) {
-  
   // console.log(status==='add' && true);
   // console.log(data.selectedImg);
   const images = [autoplay1,autoplay2,autoplay3,autoplay4];
@@ -75,6 +74,7 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
     autoplaySpeed:1
   };
 
+
   /*react-date-picker*/
   const [date,setDate]  = useState(new Date()); 
   const momentDate = moment(date).format('YYYY/MM/DD');
@@ -98,15 +98,22 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
     setContent(inputContentValue);
   }
 
+  let [inputId,setId] = useState(0) ;
+
   let id = localStorage.getItem('id')
+  useEffect(() => {
+    inputId = id ? setId(JSON.parse(id)) : 0 ;
+  },[inputId]);
+
   const saveJournal = () => {
-    
+    const type = 0 ;
     if (id) {
       id = JSON.parse(id) + 1;
     } else {
       id = 0 ;
     }
     localStorage.setItem('id',id)
+    
     const _journal = {
       id,
       title,
@@ -114,26 +121,21 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
       selectedImg,
       content,
     }
-    saveData(_journal)
+    saveData(_journal,type)
   }
 
   
   const editJournal = () => {
-    
-    status = 'add' ;
-    editData(data.id);
-    
-    
+    editData();
   }
 
   const editSaveJournal = () => {
-    data.title=title;
-    data.momentDate=momentDate;
-    data.selectedImg=selectedImg;
-    data.content=content;
-    
-    saveData(data)
-    console.log(data)
+    const type = 1 ;
+    data.title = title ? title : data.title;
+    data.momentDate = momentDate ? momentDate : data.momentDate;
+    data.selectedImg = selectedImg ? selectedImg : data.selectedImg;
+    data.content = content ? content : data.content;
+    saveData(data,type);
   }
    
   useEffect(() => {
@@ -154,7 +156,7 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
             <img src={pen} alt="標題"/>
             <input type="text" placeholder={data.title !== '' ? data.title : '標題...'} value={title} onInput={inputTitle} readOnly={!readOnly}/>
           </div>
-          <input type='text' className='id' value={data.id !== id ? data.id : id}  onChange={saveJournal} />
+          <input type='text' className='id' value={inputId}  onChange={saveJournal} />
           <div className="calendar">
             <img src={calendar} alt="日期"/>
             <DatePicker
@@ -197,10 +199,10 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
           </span>
           <textarea name="journal" value={content} onChange={inputContent} placeholder={data.content !== '' ? data.content : '日記...'} readOnly={!readOnly}></textarea>
           </div>
-        {(openBook && readOnly && display) && <div className="btn saveJournal" onClick={saveJournal}>
+        {(openBook && readOnly && display === false) && <div className="btn saveJournal" onClick={saveJournal}>
           <img src={save} alt="儲存" width={30} />
         </div>} 
-        {(openBook && readOnly && !display) && <div className="btn editSaveJournal" >
+        {(openBook && readOnly && display === true) && <div className="btn editSaveJournal" >
           <img src={save} alt="儲存" width={30} onClick={editSaveJournal}/>
         </div>}
         {(openBook && !readOnly) && <div className='bothBtn'>
