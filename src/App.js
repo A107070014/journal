@@ -19,7 +19,7 @@ import moment from 'moment';
 
 export default function Journal() {
   const [openBook,setOpenBook] = useState(false);
-  const [readOnly,setReadOnly] = useState(true); 
+  const [readOnly,setReadOnly] = useState(false); 
   const [display,setDisplay] = useState(false);
   const [journalData,setJournalData] =useState(JSON.parse(localStorage.getItem('journal')));
   const [data,setData] = useState({id:0,title:'',content:'',momentDate:'',selectedImg:''});
@@ -29,7 +29,6 @@ export default function Journal() {
     setJournalData(JSON.parse(localStorage.getItem('journal')))
   },[status,data,readOnly]);
  
-
   //onmouseover、nomouseout
   const hoverAddIcon = (e) => {
     e.target.src = add2;
@@ -51,7 +50,8 @@ export default function Journal() {
       setReadOnly(true);
       setDisplay(false);
     } else {
-      setData(journalData[index]); 
+      const reverseData = journalData.slice().reverse();
+      setData(reverseData[index]);
       setReadOnly(false);
       setDisplay(true);
     }
@@ -72,10 +72,9 @@ export default function Journal() {
     localStorage.setItem('journal',JSON.stringify(localData));
     setJournalData(JSON.parse(localStorage.getItem('journal')));
     setReadOnly(!readOnly);
-    setStatus('');
   }
   
-
+  //編輯日記
   const editData = (editStatus) => {
     setReadOnly(!readOnly);
     // const id = editDataId;
@@ -107,7 +106,7 @@ export default function Journal() {
               </div>            
               <img className="add" src={add} alt="增加日記" onClick={() => toPage('add')}  onMouseOver={hoverAddIcon} onMouseOut={outAddIcon}/>
             </div>
-            {journalData && journalData.map((data,index)=> (
+            {journalData && journalData.slice().reverse().map((data,index)=> (
             <div className="journalList" key={index} onClick={() => toPage('look',index)} >
               <div className="journalDate">{data.momentDate}</div>
               <div className="journal">
@@ -146,6 +145,7 @@ export default function Journal() {
           readOnly={readOnly}
           editData={editData}
           display={display}
+          journalData={journalData}
         />
       </div>
       <div className="back-cover"></div>

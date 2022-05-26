@@ -20,7 +20,9 @@ import autoplay4 from '../../img/autoplay4.jpg';
 
 import moment from "moment";
 
-export default function Page({openBook,status,data,saveData,readOnly,editData,display}) {
+export default function Page({openBook,status,data,saveData,readOnly,editData,display,journalData}) {
+
+  journalData = journalData && journalData.slice().reverse();
   // console.log(status==='add' && true);
   // console.log(data.selectedImg);
   const images = [autoplay1,autoplay2,autoplay3,autoplay4];
@@ -58,8 +60,7 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
       setSelectedImg(images);
     } else {
       setSelectedImg(selectedImg.filter(e => e != data));
-    }
-    
+    }  
   }
 
   /*react-slick autoplay*/
@@ -76,7 +77,7 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
 
 
   /*react-date-picker*/
-  const [date,setDate]  = useState(new Date()); 
+  const [date,setDate]  = useState(''); 
   const momentDate = moment(date).format('YYYY/MM/DD');
   // console.log(moment(date).get('year'));
   // console.log(moment(date).get('month')+1);
@@ -98,6 +99,7 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
     setContent(inputContentValue);
   }
 
+  //日記id
   let [inputId,setId] = useState(0) ;
 
   let id = localStorage.getItem('id')
@@ -105,8 +107,10 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
     inputId = id ? setId(JSON.parse(id)) : 0 ;
   },[inputId]);
 
+  //新增日記儲存鈕
   const saveJournal = () => {
     const type = 0 ;
+    status = 'look';
     if (id) {
       id = JSON.parse(id) + 1;
     } else {
@@ -124,11 +128,12 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
     saveData(_journal,type)
   }
 
-  
+  //編輯
   const editJournal = () => {
     editData();
   }
 
+  //編輯完儲存
   const editSaveJournal = () => {
     const type = 1 ;
     data.title = title ? title : data.title;
@@ -146,29 +151,45 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
     }
   },[date,title,content,status,readOnly]);
 
-  
-  
+  // console.log(moment(journalData[0]['momentDate']).get('date'));
 
   return (
-    <div className="innerpage">
+    <div className="innerpage" >
         <div className="info">
           <div className="title">
             <img src={pen} alt="標題"/>
-            <input type="text" placeholder={data.title !== '' ? data.title : '標題...'} value={title} onInput={inputTitle} readOnly={!readOnly}/>
+            {(status === '' && journalData) ? 
+              <input type="text" placeholder={journalData[0]['title']} value={title} onInput={inputTitle} readOnly={readOnly}/>
+              :
+              <input type="text" placeholder={data.title !== '' ? data.title : '標題...'} value={title} onInput={inputTitle} readOnly={!readOnly}/>
+            }
           </div>
           <input type='text' className='id' value={inputId}  onChange={saveJournal} />
           <div className="calendar">
             <img src={calendar} alt="日期"/>
-            <DatePicker
-              onChange = {setDate}
-              value = {date}
-              dayPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('date') : moment(date).get('date')}
-              monthPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('month')+1 : moment(date).get('month')+1}
-              yearPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('year') : moment(date).get('year')}
-              locale= {"en"}
-              format = {"y/MM/dd"}
-              disabled = {!readOnly}
-            />
+            {(status === '' && journalData) ? 
+              <DatePicker
+                onChange = {setDate}
+                value = {date}
+                dayPlaceholder = {moment(journalData[0]['momentDate']).get('date')}
+                monthPlaceholder = {moment(journalData[0]['momentDate']).get('month')+1}
+                yearPlaceholder = {moment(journalData[0]['momentDate']).get('year')}
+                locale= {"en"}
+                format = {"y/MM/dd"}
+                disabled = {readOnly}
+              />
+              :
+              <DatePicker
+                onChange = {setDate}
+                value = {date}
+                dayPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('date') : moment(date).get('date')}
+                monthPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('month')+1 : moment(date).get('month')+1}
+                yearPlaceholder = {data.momentDate !== momentDate ? moment(data.momentDate).get('year') : moment(date).get('year')}
+                locale= {"en"}
+                format = {"y/MM/dd"}
+                disabled = {!readOnly}
+              />
+            }
           </div>
         </div>
         <div className="content">
@@ -197,16 +218,17 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
               id="file-input" type="file" accept="image/png,image/jpeg" 
               multiple="multiple"/>
           </span>
-          <textarea name="journal" value={content} onChange={inputContent} placeholder={data.content !== '' ? data.content : '日記...'} readOnly={!readOnly}></textarea>
+          {(status === '' && journalData) ? 
+              <textarea name="journal" value={content} onChange={inputContent} placeholder={journalData[0]['content']} readOnly={readOnly}></textarea>
+              :
+              <textarea name="journal" value={content} onChange={inputContent} placeholder={data.content !== '' ? data.content : '日記...'} readOnly={!readOnly}></textarea>
+            }
           </div>
-        {(openBook && readOnly && display === false) && <div className="btn saveJournal" onClick={saveJournal}>
+        {(openBook && readOnly) && <div className="btn saveJournal" onClick={!display? saveJournal : editSaveJournal}>
           <img src={save} alt="儲存" width={30} />
         </div>} 
-        {(openBook && readOnly && display === true) && <div className="btn editSaveJournal" >
-          <img src={save} alt="儲存" width={30} onClick={editSaveJournal}/>
-        </div>}
-        {(openBook && !readOnly) && <div className='bothBtn'>
-          <div className="deleteBtn" >
+        {((openBook && !readOnly) || (status === '' && journalData)) && <div className='bothBtn'>
+          <div className="deleteBtn">
             <img src={trashCan} alt="刪除" width={30}/>
           </div>
           <div className="editBtn" onClick={editJournal}>
