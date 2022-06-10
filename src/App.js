@@ -100,10 +100,10 @@ export default function Journal() {
               <div className="picture">
                 <img src={picture} alt="大頭貼"/>
               </div>
-              <div className="search">
+              {/* <div className="search">
                 <input type="text" className="searchBox" placeholder='搜尋日記...'/>
                 <img src={search} alt="搜尋" className="searchIcon"/>
-              </div>            
+              </div>             */}
               <img className="add" src={add} alt="增加日記" onClick={() => toPage('add')}  onMouseOver={hoverAddIcon} onMouseOut={outAddIcon}/>
             </div>
             {journalData && journalData.slice().reverse().map((data,index)=> (

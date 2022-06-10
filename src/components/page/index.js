@@ -100,7 +100,7 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
   }
 
   //日記id
-  let [inputId,setId] = useState(0) ;
+  let [inputId,setId] = useState(0);
 
   let id = localStorage.getItem('id')
   useEffect(() => {
@@ -164,7 +164,7 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
               <input type="text" placeholder={data.title !== '' ? data.title : '標題...'} value={title} onInput={inputTitle} readOnly={!readOnly}/>
             }
           </div>
-          <input type='text' className='id' value={inputId}  onChange={saveJournal} />
+          {/* <input type='text' className='id' value={inputId}  onChange={saveJournal} /> */}
           <div className="calendar">
             <img src={calendar} alt="日期"/>
             {(status === '' && journalData) ? 
@@ -208,7 +208,7 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
               }
             </Slider>
           </div>          
-          <span className="uploadImage" style={{display:!readOnly && "none"}}>
+          {/* <span className="uploadImage" style={{display:!readOnly && "none"}}>
             <label for="file-input">
               <img src={image} alt="上傳照片"/>
             </label>
@@ -217,7 +217,7 @@ export default function Page({openBook,status,data,saveData,readOnly,editData,di
               onClick={(event)=> {event.target.value = null}}
               id="file-input" type="file" accept="image/png,image/jpeg" 
               multiple="multiple"/>
-          </span>
+          </span> */}
           {(status === '' && journalData) ? 
               <textarea name="journal" value={content} onChange={inputContent} placeholder={journalData[0]['content']} readOnly={readOnly}></textarea>
               :
